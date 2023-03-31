@@ -3432,6 +3432,7 @@ table_properties
         row_movement_clause?
         logical_replication_clause?
         flashback_archive_clause?
+        physical_properties?
         (ROW ARCHIVAL)?
         (AS select_only_statement | FOR EXCHANGE WITH TABLE (schema_name '.')? table_name)?
     ;
@@ -3668,7 +3669,7 @@ table_partition_description
     : deferred_segment_creation? segment_attributes_clause?
         (table_compression | key_compression)?
         (OVERFLOW segment_attributes_clause? )?
-        (lob_storage_clause | varray_col_properties | nested_table_col_properties)?
+        (lob_storage_clause | varray_col_properties | nested_table_col_properties)*
     ;
 
 partitioning_storage_clause
@@ -3786,7 +3787,7 @@ deferred_segment_creation
 
 segment_attributes_clause
     : ( physical_attributes_clause
-      | TABLESPACE tablespace_name=id_expression
+      | TABLESPACE (tablespace_name=id_expression | SET? identifier)
       | table_compression
       | logging_clause
       )+
@@ -5019,10 +5020,16 @@ varray_item
     ;
 
 column_properties
-    : object_type_col_properties
+    : (object_type_col_properties
     | nested_table_col_properties
-    | (varray_col_properties | lob_storage_clause) //TODO '(' ( ','? lob_partition_storage)+ ')'
-    | xmltype_column_properties
+    | (varray_col_properties | lob_storage_clause) ('(' lob_partition_storage (',' lob_partition_storage)* ')')? //TODO '(' ( ','? lob_partition_storage)+ ')'
+    | xmltype_column_properties)+
+    ;
+
+lob_partition_storage
+    : LOB ('(' lob_item (',' lob_item) ')' STORE AS ((SECUREFILE | BASICFILE) | '(' lob_storage_parameters ')')+
+          | '(' lob_item ')' STORE AS ((SECUREFILE | BASICFILE) | lob_segname | '(' lob_storage_parameters ')')+
+          )
     ;
 
 period_definition
