@@ -4631,7 +4631,7 @@ role_identified_clause
     | IDENTIFIED ( BY identifier
                  | USING identifier ('.' id_expression)?
                  | EXTERNALLY
-                 | GLOBALLY
+                 | GLOBALLY (AS CHAR_STRING)?
                  )
     ;
 
