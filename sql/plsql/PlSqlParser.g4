@@ -621,7 +621,8 @@ function_spec
     ;
 
 package_obj_body
-    : exception_declaration
+    : pragma_declaration
+    | exception_declaration
     | subtype_declaration
     | cursor_declaration
     | variable_declaration
@@ -1028,7 +1029,7 @@ pragma_elements
     ;
 
 type_elements_parameter
-    : parameter_name type_spec
+    : parameter_name (IN | OUT | INOUT | NOCOPY)* type_spec
     ;
 
 // Sequence DDLs
@@ -5469,7 +5470,7 @@ trigger_block
     ;
 
 block
-    : DECLARE? declare_spec+ body
+    : DECLARE? declare_spec* body
     ;
 
 // SQL Statements
@@ -7453,6 +7454,7 @@ non_reserved_keywords_in_12c
     | SDO_GEOM_MBR
     | SECONDS
     | SECRET
+    | SEQ
     | SERIAL
     | SERVICES
     | SERVICE_NAME_CONVERT
