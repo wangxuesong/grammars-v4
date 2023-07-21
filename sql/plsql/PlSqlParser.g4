@@ -2205,7 +2205,7 @@ storage_table_clause
 
 // https://docs.oracle.com/database/121/SQLRF/statements_4008.htm#SQLRF56110
 unified_auditing
-    : {self.isVersion12()}?
+    : {p.isVersion12()}?
       AUDIT (POLICY policy_name ((BY | EXCEPT) audit_user (',' audit_user)* )?
                                 (WHENEVER NOT? SUCCESSFUL)?
             | CONTEXT NAMESPACE oracle_namespace
@@ -2233,11 +2233,11 @@ audit_traditional
     ;
 
 audit_direct_path
-    : {self.isVersion12()}? DIRECT_PATH auditing_by_clause
+    : {p.isVersion12()}? DIRECT_PATH auditing_by_clause
     ;
 
 audit_container_clause
-    : {self.isVersion12()}? (CONTAINER EQUALS_OP (CURRENT | ALL))
+    : {p.isVersion12()}? (CONTAINER EQUALS_OP (CURRENT | ALL))
     ;
 
 audit_operation_clause
@@ -2279,7 +2279,7 @@ auditing_on_clause
     : ON ( object_name
          | DIRECTORY regular_id
          | MINING MODEL model_name
-         | {self.isVersion12()}? SQL TRANSLATION PROFILE profile_name
+         | {p.isVersion12()}? SQL TRANSLATION PROFILE profile_name
          | DEFAULT
          )
     ;
@@ -2307,7 +2307,7 @@ sql_statement_shortcut
     | MATERIALIZED VIEW
     | NOT EXISTS
     | OUTLINE
-    | {self.isVersion12()}? PLUGGABLE DATABASE
+    | {p.isVersion12()}? PLUGGABLE DATABASE
     | PROCEDURE
     | PROFILE
     | PUBLIC DATABASE LINK
@@ -2536,11 +2536,11 @@ credential_name
     ;
 
 library_editionable
-    : {self.isVersion12()}? (EDITIONABLE | NONEDITIONABLE)
+    : {p.isVersion12()}? (EDITIONABLE | NONEDITIONABLE)
     ;
 
 library_debug
-    : {self.isVersion12()}? DEBUG
+    : {p.isVersion12()}? DEBUG
     ;
 
 
@@ -2609,7 +2609,7 @@ alter_view
     ;
 
 alter_view_editionable
-    : {self.isVersion12()}? (EDITIONABLE | NONEDITIONABLE)
+    : {p.isVersion12()}? (EDITIONABLE | NONEDITIONABLE)
     ;
 
 // https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/CREATE-VIEW.html
@@ -4212,7 +4212,7 @@ partial_database_recovery
     ;
 
 partial_database_recovery_10g
-    : {self.isVersion10()}? STANDBY
+    : {p.isVersion10()}? STANDBY
       ( TABLESPACE tablespace (',' tablespace)*
       | DATAFILE CHAR_STRING | filenumber (',' CHAR_STRING | filenumber)*
       )
@@ -5025,7 +5025,7 @@ column_properties
     ;
 
 period_definition
-    : {self.isVersion12()}? PERIOD FOR column_name
+    : {p.isVersion12()}? PERIOD FOR column_name
         ( '(' start_time_column ',' end_time_column ')' )?
     ;
 
