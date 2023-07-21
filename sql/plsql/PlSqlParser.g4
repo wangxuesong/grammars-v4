@@ -611,12 +611,12 @@ create_package_body
 package_obj_spec
     : pragma_declaration
     | exception_declaration
-    | variable_declaration
     | subtype_declaration
     | cursor_declaration
     | type_declaration
     | procedure_spec
     | function_spec
+    | variable_declaration
     ;
 
 procedure_spec
@@ -5289,7 +5289,6 @@ seq_of_declare_specs
 declare_spec
     : pragma_declaration
     | exception_declaration
-    | variable_declaration
     | subtype_declaration
     | cursor_declaration
     | type_declaration
@@ -5297,6 +5296,7 @@ declare_spec
     | function_spec
     | procedure_body
     | function_body
+    | variable_declaration
     ;
 
 // incorporates constant_declaration
