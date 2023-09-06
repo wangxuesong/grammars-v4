@@ -5542,7 +5542,7 @@ open_statement
     ;
 
 fetch_statement
-    : FETCH cursor_name (it1=INTO variable_name (',' variable_name)* | BULK COLLECT INTO variable_name (',' variable_name)* (LIMIT (numeric | variable_name))?)
+    : FETCH cursor_name (it1=INTO general_element (',' general_element)* | BULK COLLECT INTO general_element (',' general_element)* (LIMIT (numeric | variable_name))?)
     ;
 
 open_for_statement
